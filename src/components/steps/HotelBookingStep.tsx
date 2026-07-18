@@ -45,6 +45,23 @@ export function HotelBookingStep() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+
+  };
+
+  const handleSaveTrip = () => {
+    if (!tripDetails || !selectedDestination || !selectedHotel) return;
+    const hotel = hotels.find(h => h.id === selectedHotel);
+    const newTrip = {
+      id: Date.now().toString(),
+      preferences,
+      selectedDestination,
+      tripDetails,
+      hotel,
+      createdAt: new Date().toISOString()
+    };
+    const existingTrips = JSON.parse(localStorage.getItem("savedTrips") || "[]");
+    localStorage.setItem("savedTrips", JSON.stringify([...existingTrips, newTrip]));
+    navigate("/my-trips");
   };
 
 
@@ -112,13 +129,22 @@ export function HotelBookingStep() {
         <button onClick={() => navigate('/packing')} className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-sm uppercase rounded-2xl transition-colors hover:bg-white/20">
           Back
         </button>
-        <button 
-          onClick={handleExportText} 
-          disabled={!selectedHotel}
-          className={`px-8 py-4 font-black text-sm uppercase rounded-2xl shadow-xl transition-all ${selectedHotel ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-white/20 text-white/50 cursor-not-allowed'}`}
-        >
-          Download Itinerary (.txt)
-        </button>
+        <div className="flex gap-4">
+          <button 
+            onClick={handleExportText} 
+            disabled={!selectedHotel}
+            className={`px-8 py-4 font-black text-sm uppercase rounded-2xl shadow-xl transition-all ${selectedHotel ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-white/5 text-white/30 cursor-not-allowed'}`}
+          >
+            Download (.txt)
+          </button>
+          <button 
+            onClick={handleSaveTrip} 
+            disabled={!selectedHotel}
+            className={`px-8 py-4 font-black text-sm uppercase rounded-2xl shadow-xl transition-all ${selectedHotel ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-white/20 text-white/50 cursor-not-allowed'}`}
+          >
+            Save Trip
+          </button>
+        </div>
       </div>
     </div>
   );

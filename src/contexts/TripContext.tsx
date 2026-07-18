@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { TripStyle } from '../types';
 
 type Destination = {
@@ -78,17 +78,48 @@ type TripContextType = {
 const TripContext = createContext<TripContextType | undefined>(undefined);
 
 export function TripProvider({ children }: { children: React.ReactNode }) {
-  const [preferences, setPreferences] = useState<Preferences>({
-    origin: '',
-    dates: '',
-    travelers: 1,
-    budget: '₹1,00,000 - ₹2,00,000',
-    tripStyle: 'relaxation',
-    interests: '',
+  const [preferences, setPreferences] = useState<Preferences>(() => {
+    const saved = localStorage.getItem('trip_preferences');
+    return saved ? JSON.parse(saved) : {
+      origin: '',
+      dates: '',
+      travelers: 1,
+      budget: '₹1,00,000 - ₹2,00,000',
+      tripStyle: 'relaxation',
+      interests: '',
+    };
   });
-  const [destinations, setDestinations] = useState<Destination[]>([]);
-  const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
-  const [tripDetails, setTripDetails] = useState<TripDetails | null>(null);
+
+  const [destinations, setDestinations] = useState<Destination[]>(() => {
+    const saved = localStorage.getItem('trip_destinations');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [selectedDestination, setSelectedDestination] = useState<Destination | null>(() => {
+    const saved = localStorage.getItem('trip_selectedDestination');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  const [tripDetails, setTripDetails] = useState<TripDetails | null>(() => {
+    const saved = localStorage.getItem('trip_details');
+    return saved ? JSON.parse(saved) : null;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('trip_preferences', JSON.stringify(preferences));
+  }, [preferences]);
+
+  useEffect(() => {
+    localStorage.setItem('trip_destinations', JSON.stringify(destinations));
+  }, [destinations]);
+
+  useEffect(() => {
+    localStorage.setItem('trip_selectedDestination', JSON.stringify(selectedDestination));
+  }, [selectedDestination]);
+
+  useEffect(() => {
+    localStorage.setItem('trip_details', JSON.stringify(tripDetails));
+  }, [tripDetails]);
 
   return (
     <TripContext.Provider

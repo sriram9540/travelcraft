@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GlassCard } from './GlassCard';
 
 export function MyTrips() {
@@ -7,6 +7,14 @@ export function MyTrips() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
+  const [savedTrips, setSavedTrips] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const trips = JSON.parse(localStorage.getItem('savedTrips') || '[]');
+      setSavedTrips(trips);
+    }
+  }, [isLoggedIn]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,15 +37,51 @@ export function MyTrips() {
           <p className="text-white/60 font-medium tracking-wide italic text-lg">Welcome back. Here are your saved trips.</p>
         </div>
         
-        <GlassCard className="!p-8">
-          <div className="text-center py-10">
-             <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
-               ✈️
-             </div>
-             <h3 className="text-xl font-bold mb-2">No Saved Trips Yet</h3>
-             <p className="text-white/50">Your confirmed trip itineraries will appear here.</p>
+        {savedTrips.length === 0 ? (
+          <GlassCard className="!p-8">
+            <div className="text-center py-10">
+               <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                 ✈️
+               </div>
+               <h3 className="text-xl font-bold mb-2">No Saved Trips Yet</h3>
+               <p className="text-white/50">Your confirmed trip itineraries will appear here.</p>
+            </div>
+          </GlassCard>
+        ) : (
+          <div className="flex flex-col gap-6">
+            {savedTrips.map((trip: any) => (
+              <GlassCard key={trip.id} className="!p-6">
+                <div className="flex flex-col gap-4">
+                  <div className="flex justify-between items-start border-b border-white/10 pb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold">{trip.selectedDestination?.title}</h3>
+                      <p className="text-white/60 text-sm mt-1">{trip.preferences?.dates} • {trip.preferences?.travelers} Travelers</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="text-xs font-bold uppercase tracking-widest text-white/50 block mb-1">Hotel</span>
+                      <span className="font-bold">{trip.hotel?.name || 'None'}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col gap-2">
+                    <span className="text-xs font-bold uppercase tracking-widest text-white/50 mb-1">Itinerary Highlights</span>
+                    {Array.isArray(trip.tripDetails?.itinerary) && trip.tripDetails.itinerary.slice(0, 2).map((day: any) => (
+                      <div key={day.day} className="flex gap-4">
+                        <span className="text-orange-500 font-bold w-12 shrink-0">Day {day.day}</span>
+                        <span className="text-white/80 text-sm truncate">{day.title}</span>
+                      </div>
+                    ))}
+                    {Array.isArray(trip.tripDetails?.itinerary) && trip.tripDetails.itinerary.length > 2 && (
+                      <div className="text-white/40 text-sm mt-1">
+                        + {trip.tripDetails.itinerary.length - 2} more days...
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </GlassCard>
+            ))}
           </div>
-        </GlassCard>
+        )}
       </div>
     );
   }
