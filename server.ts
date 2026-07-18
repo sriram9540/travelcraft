@@ -113,10 +113,10 @@ async function startServer() {
       const prompt = `Plan a trip to ${destination} starting from ${origin} for ${travelers} travelers. Duration: ${dates}. Budget: ${budget}. Style: ${tripStyle}. Interests: ${interests}.
       
       Using Google Search, find:
-      1. A daily itinerary for the duration (max 5 days, if duration is vague assume 3 days).
-      2. A budget estimation breakdown.
-      3. A packing checklist specifically suited for the current weather/climate in ${destination}.
-      4. 3 hotel options in ${destination} ranging from low cost to high cost, including their Google search ratings.
+      1. A detailed daily itinerary for the EXACT number of days specified in the duration (e.g. if 4 days, provide 4 days).
+      2. A highly accurate budget estimation breakdown. Calculate costs based on the number of days (${dates}), number of travelers (${travelers}), and the selected hotel prices in ${destination}. Ensure the total makes sense.
+      3. A packing checklist specifically suited for the current weather/climate in ${destination}. For example, if it's a sunny place like Rajasthan, suggest sunscreen, etc. Use Google Search to check the weather and recommend appropriate items.
+      4. 3 hotel options in ${destination} ranging from low cost to high cost, including their Google search ratings. Provide an imageQuery for each hotel that can be used to search for a generic photo of such a hotel room.
       `;
 
       const response = await ai.models.generateContent({

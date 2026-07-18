@@ -59,7 +59,7 @@ export function DestinationsStep() {
             <div className="flex flex-col gap-4 h-full">
               <div 
                 className="h-40 rounded-3xl w-full bg-cover bg-center border border-white/10"
-                style={{ backgroundImage: `url(https://source.unsplash.com/800x600/?${encodeURIComponent(dest.imageQuery || dest.title)})` }}
+                style={{ backgroundImage: `url(https://image.pollinations.ai/prompt/${encodeURIComponent(dest.imageQuery || dest.title)}?width=800&height=600&nologo=true)` }}
               ></div>
               
               <div className="flex flex-col gap-1 flex-1">

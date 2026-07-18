@@ -29,7 +29,6 @@ export function WizardLayout() {
         </Link>
         <div className="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest opacity-80">
           <Link to="/" className="border-b-2 border-transparent hover:border-white pb-1 transition-colors">Plan</Link>
-          <Link to="/explore" className="border-b-2 border-transparent hover:border-white pb-1 transition-colors">Explore</Link>
           <Link to="/my-trips" className="border-b-2 border-transparent hover:border-white pb-1 transition-colors">My Trips</Link>
         </div>
       </header>
@@ -46,11 +45,11 @@ export function WizardLayout() {
         <div className="flex space-x-12">
           <div className="flex items-center space-x-3">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">Claude AI Engine: Online</span>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">TripCraft Engine: Online</span>
           </div>
         </div>
         <div className="text-[10px] text-white/30 uppercase tracking-widest hidden sm:block">
-          TripCraft Prototype v4.2 &copy; 2026
+          TripCraft Planner &copy; 2026
         </div>
       </footer>
     </div>

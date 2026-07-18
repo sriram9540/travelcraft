@@ -7,7 +7,7 @@ export function HotelBookingStep() {
   const navigate = useNavigate();
   const { tripDetails, selectedDestination, preferences } = useTrip();
   const [selectedHotel, setSelectedHotel] = useState<string | null>(null);
-  const [isConfirmed, setIsConfirmed] = useState(false);
+
 
   const hotels = tripDetails?.hotels || [];
 
@@ -47,27 +47,6 @@ export function HotelBookingStep() {
     URL.revokeObjectURL(url);
   };
 
-  if (isConfirmed) {
-    return (
-      <div className="max-w-2xl mx-auto w-full flex-1 flex flex-col items-center justify-center text-center gap-6">
-        <div className="w-24 h-24 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center text-5xl mb-4 border border-green-500/50">
-          ✓
-        </div>
-        <h2 className="text-5xl font-light tracking-tighter leading-none">Trip Planned!</h2>
-        <p className="text-white/60 font-medium tracking-wide italic text-lg max-w-md">
-          Your itinerary and hotel preferences have been saved.
-        </p>
-        <div className="flex gap-4 mt-8">
-          <button onClick={handleExportText} className="px-8 py-4 bg-orange-500 text-white font-black text-sm uppercase rounded-2xl shadow-xl transition-colors hover:bg-orange-600">
-            Download Itinerary (.txt)
-          </button>
-          <button onClick={() => navigate('/my-trips')} className="px-8 py-4 bg-white text-black font-black text-sm uppercase rounded-2xl shadow-xl transition-colors hover:bg-opacity-90">
-            View My Trips
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="max-w-5xl mx-auto w-full flex flex-col flex-1">
@@ -91,7 +70,7 @@ export function HotelBookingStep() {
             <div className="flex flex-col gap-4 h-full">
               <div 
                 className="h-48 rounded-3xl w-full bg-cover bg-center border border-white/10"
-                style={{ backgroundImage: `url(https://source.unsplash.com/800x600/?${encodeURIComponent(hotel.imageQuery || hotel.name)})` }}
+                style={{ backgroundImage: `url(https://image.pollinations.ai/prompt/${encodeURIComponent(hotel.imageQuery || hotel.name)}?width=800&height=600&nologo=true)` }}
               ></div>
               
               <div className="flex flex-col gap-1 flex-1">
@@ -134,11 +113,11 @@ export function HotelBookingStep() {
           Back
         </button>
         <button 
-          onClick={() => setIsConfirmed(true)} 
+          onClick={handleExportText} 
           disabled={!selectedHotel}
-          className={`px-8 py-4 font-black text-sm uppercase rounded-2xl shadow-xl transition-all ${selectedHotel ? 'bg-white text-black hover:bg-opacity-90' : 'bg-white/20 text-white/50 cursor-not-allowed'}`}
+          className={`px-8 py-4 font-black text-sm uppercase rounded-2xl shadow-xl transition-all ${selectedHotel ? 'bg-orange-500 text-white hover:bg-orange-600' : 'bg-white/20 text-white/50 cursor-not-allowed'}`}
         >
-          Confirm Plan
+          Download Itinerary (.txt)
         </button>
       </div>
     </div>
