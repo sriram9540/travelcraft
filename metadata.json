@@ -1,0 +1,6 @@
+{
+  "name": "TripCraft",
+  "description": "AI Travel Planner - generates destination suggestions, day-by-day itineraries, budgets, and packing checklists.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
