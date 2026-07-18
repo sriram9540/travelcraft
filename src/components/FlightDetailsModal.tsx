@@ -36,7 +36,7 @@ export function FlightDetailsModal({ offer, onClose }: FlightDetailsModalProps) 
 
           {/* Scrollable Content */}
           <div className="p-6 overflow-y-auto flex-1 flex flex-col gap-8">
-            {offer.flights.map((flight: any, flightIdx: number) => (
+            {Array.isArray(offer?.flights) && offer.flights.map((flight: any, flightIdx: number) => (
               <div key={flightIdx} className="flex flex-col gap-6">
                 <div className="flex items-center gap-4">
                   <div className="px-3 py-1 bg-orange-500 rounded-full text-[10px] font-black uppercase tracking-widest">
@@ -110,16 +110,23 @@ export function FlightDetailsModal({ offer, onClose }: FlightDetailsModalProps) 
                 </div>
               </div>
             ))}
+          </div>
             
           {/* Footer */}
           <div className="p-6 border-t border-white/10 bg-white/5 flex justify-between items-center">
             <div className="flex flex-col">
               <span className="text-[10px] uppercase font-bold text-white/50 tracking-widest">Total Price</span>
-              <span className="text-3xl font-bold">₹{offer.price.toLocaleString('en-IN')}</span>
+              <span className="text-3xl font-bold">₹{Number(offer?.price || 0).toLocaleString('en-IN')}</span>
             </div>
-            <button className="px-8 py-4 bg-white text-black font-black text-sm uppercase rounded-xl shadow-xl hover:bg-opacity-90 transition-colors" onClick={onClose}>
-              Save Flight
-            </button>
+            {offer.booking_link ? (
+              <a href={offer.booking_link} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-orange-500 text-white font-black text-sm uppercase rounded-xl shadow-xl hover:bg-orange-600 transition-colors inline-block text-center">
+                Book Flight
+              </a>
+            ) : (
+              <button className="px-8 py-4 bg-white text-black font-black text-sm uppercase rounded-xl shadow-xl hover:bg-opacity-90 transition-colors" onClick={onClose}>
+                Save Flight
+              </button>
+            )}
           </div>
         </GlassCard>
       </div>

@@ -29,6 +29,7 @@ export function WizardLayout() {
         </Link>
         <div className="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest opacity-80">
           <Link to="/" className="border-b-2 border-transparent hover:border-white pb-1 transition-colors">Plan</Link>
+          <Link to="/explore" className="border-b-2 border-transparent hover:border-white pb-1 transition-colors">Flights</Link>
           <Link to="/my-trips" className="border-b-2 border-transparent hover:border-white pb-1 transition-colors">My Trips</Link>
         </div>
       </header>

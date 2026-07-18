@@ -9,7 +9,7 @@ export function HotelBookingStep() {
   const [selectedHotel, setSelectedHotel] = useState<string | null>(null);
 
 
-  const hotels = tripDetails?.hotels || [];
+  const hotels = Array.isArray(tripDetails?.hotels) ? tripDetails?.hotels : [];
 
   const handleExportText = () => {
     if (!tripDetails || !selectedDestination || !selectedHotel) return;
@@ -83,7 +83,7 @@ export function HotelBookingStep() {
                 <p className="text-white/60 italic font-serif mt-0">{hotel.location}</p>
                 
                 <div className="flex gap-2 flex-wrap mt-4">
-                  {hotel.amenities?.map(amenity => (
+                  {Array.isArray(hotel?.amenities) && hotel.amenities.map(amenity => (
                     <span key={amenity} className="text-[10px] uppercase font-bold text-white/50 tracking-widest bg-white/5 px-2 py-1 rounded-md">
                       {amenity}
                     </span>

@@ -38,7 +38,7 @@ export function PreferencesStep() {
       
       if (res.ok) {
         const data = await res.json();
-        setDestinations(data.destinations);
+        setDestinations(Array.isArray(data.destinations) ? data.destinations : []);
         navigate('/destinations');
       } else {
         alert('Failed to generate destinations. Please try again.');

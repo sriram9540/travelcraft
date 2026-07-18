@@ -16,7 +16,7 @@ export function PackingChecklistStep() {
   const [items, setItems] = useState<PackingItem[]>([]);
 
   useEffect(() => {
-    if (tripDetails?.packingList) {
+    if (Array.isArray(tripDetails?.packingList)) {
       setItems(tripDetails.packingList.map(item => ({ ...item, checked: false })));
     }
   }, [tripDetails]);

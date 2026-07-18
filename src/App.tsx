@@ -18,6 +18,7 @@ export default function App() {
           <Route element={<WizardLayout />}>
             <Route path="/" element={<PreferencesStep />} />
             <Route path="/destinations" element={<DestinationsStep />} />
+            <Route path="/explore" element={<ExploreFlights />} />
             <Route path="/my-trips" element={<MyTrips />} />
             <Route path="/itinerary" element={<ItineraryBuilderStep />} />
             <Route path="/budget" element={<BudgetEstimatorStep />} />

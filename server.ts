@@ -385,6 +385,7 @@ async function startServer() {
             "type": "Direct or 1 Stop",
             "price": 12500, // Number in INR
             "currency": "INR",
+            "booking_link": "https://www.google.com/travel/flights?q=...",
             "flights": [
               {
                 "departure_airport": { "id": "BOM", "time": "2023-11-20 08:00" },
@@ -416,6 +417,7 @@ async function startServer() {
                     type: { type: Type.STRING },
                     price: { type: Type.INTEGER },
                     currency: { type: Type.STRING },
+                    booking_link: { type: Type.STRING, description: "Link to book this flight on Google Flights or Airline website" },
                     flights: {
                       type: Type.ARRAY,
                       items: {
@@ -454,6 +456,7 @@ async function startServer() {
           type: "Direct",
           price: 15000,
           currency: "INR",
+          booking_link: `https://www.google.com/travel/flights?q=Flights%20from%20${req.body.origin || "LHR"}%20to%20${req.body.destination || "JFK"}%20on%20${req.body.departureDate || "2023-11-20"}`,
           flights: [
             {
               departure_airport: { id: req.body.origin || "LHR", time: `${req.body.departureDate || "2023-11-20"} 08:00` },

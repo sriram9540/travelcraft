@@ -6,7 +6,7 @@ export function ItineraryBuilderStep() {
   const navigate = useNavigate();
   const { tripDetails, selectedDestination } = useTrip();
 
-  const itinerary = tripDetails?.itinerary || [];
+  const itinerary = Array.isArray(tripDetails?.itinerary) ? tripDetails?.itinerary : [];
 
   return (
     <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
@@ -27,7 +27,7 @@ export function ItineraryBuilderStep() {
                 <h3 className="text-xl font-bold tracking-tight">{dayPlan.title}</h3>
               </div>
               <div className="flex-1 flex flex-col gap-6">
-                {dayPlan.activities.map((activity, idx) => (
+                {Array.isArray(dayPlan?.activities) && dayPlan.activities.map((activity, idx) => (
                   <div key={idx} className="flex gap-4 items-start">
                     <span className="text-xs font-bold uppercase tracking-widest text-white/50 w-24 shrink-0 mt-1">{activity.time}</span>
                     <p className="text-white/90 text-sm md:text-base">{activity.desc}</p>

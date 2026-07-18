@@ -21,7 +21,7 @@ export function ExploreFlights() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/flights', {
+      const res = await fetch('/api/google-flights', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -128,10 +128,10 @@ export function ExploreFlights() {
             <div className="text-white/50 italic">No flights found. Try different dates or routes.</div>
           ) : (
             <div className="grid grid-cols-1 gap-6">
-              {flights.best_flights.map((offer: any) => (
+              {Array.isArray(flights?.best_flights) && flights.best_flights.map((offer: any) => (
                 <GlassCard key={offer.id} className="!p-6 flex flex-col md:flex-row justify-between items-center gap-6">
                   <div className="flex flex-col flex-1 w-full gap-4">
-                    {offer.flights.map((flight: any, idx: number) => (
+                    {Array.isArray(offer?.flights) && offer.flights.map((flight: any, idx: number) => (
                       <div key={idx} className="flex flex-col gap-2">
                         <div className="flex items-center gap-3 text-sm font-bold text-white/70">
                           <img src={flight.airline_logo} alt={flight.airline} className="h-6 w-6 object-contain bg-white rounded-md p-0.5" />
@@ -160,7 +160,7 @@ export function ExploreFlights() {
                   </div>
                   <div className="flex flex-col items-end gap-2 border-t md:border-t-0 md:border-l border-white/10 pt-4 md:pt-0 md:pl-6">
                     <span className="text-[10px] uppercase font-bold text-white/50 tracking-widest">Total Price</span>
-                    <span className="text-3xl font-bold">₹{offer.price.toLocaleString('en-IN')}</span>
+                    <span className="text-3xl font-bold">₹{Number(offer?.price || 0).toLocaleString('en-IN')}</span>
                     <button 
                       onClick={() => setSelectedOffer(offer)}
                       className="mt-2 px-6 py-2 bg-white/10 backdrop-blur-md border border-white/20 text-white font-bold text-xs uppercase rounded-xl transition-colors hover:bg-white/20 w-full whitespace-nowrap"

@@ -8,7 +8,7 @@ export function DestinationsStep() {
   const { preferences, destinations, selectedDestination, setSelectedDestination, setTripDetails } = useTrip();
   const [loading, setLoading] = useState(false);
 
-  if (destinations.length === 0) {
+  if (!Array.isArray(destinations) || destinations.length === 0) {
     return <Navigate to="/" replace />;
   }
 
@@ -50,7 +50,7 @@ export function DestinationsStep() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {destinations.map((dest) => (
+        {Array.isArray(destinations) && destinations.map((dest) => (
           <GlassCard 
             key={dest.id} 
             className={`cursor-pointer transition-all duration-300 !p-6 ${selectedDestination?.id === dest.id ? 'ring-2 ring-orange-500 bg-white/20' : 'hover:bg-white/20'}`} 
