@@ -21,7 +21,7 @@ export function ExploreFlights() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('/api/google-flights', {
+      const res = await fetch('/api/flights', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

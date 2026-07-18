@@ -322,6 +322,7 @@ async function startServer() {
           type: segments.length === 1 ? "Direct" : `${segments.length - 1} Stop${segments.length > 2 ? 's' : ''}`,
           price: parseFloat(offer.total_amount),
           currency: offer.total_currency,
+          booking_link: `https://www.google.com/travel/flights?q=Flights%20from%20${origin}%20to%20${destination}%20on%20${departureDate}`,
           flights: mappedFlights
         };
       });
@@ -338,6 +339,7 @@ async function startServer() {
           type: "Direct",
           price: 12500,
           currency: "INR",
+          booking_link: `https://www.google.com/travel/flights?q=Flights%20from%20${req.body.origin || "LHR"}%20to%20${req.body.destination || "JFK"}%20on%20${req.body.departureDate || "2023-11-20"}`,
           flights: [
             {
               departure_airport: { id: req.body.origin || "LHR", time: `${req.body.departureDate || "2023-11-20"} 08:00` },
@@ -354,6 +356,7 @@ async function startServer() {
           type: "1 Stop",
           price: 9500,
           currency: "INR",
+          booking_link: `https://www.google.com/travel/flights?q=Flights%20from%20${req.body.origin || "LHR"}%20to%20${req.body.destination || "JFK"}%20on%20${req.body.departureDate || "2023-11-20"}`,
           flights: [
             {
               departure_airport: { id: req.body.origin || "LHR", time: `${req.body.departureDate || "2023-11-20"} 14:00` },
